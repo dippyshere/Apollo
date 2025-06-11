@@ -175,14 +175,7 @@ function install_cuda() {
   fi
 }
 
-if [ -n "%{cuda_version}" ] && [[ " ${cuda_supported_architectures[@]} " =~ " ${architecture} " ]]; then
-  install_cuda
-  cmake_args+=("-DSUNSHINE_ENABLE_CUDA=ON")
-  cmake_args+=("-DCMAKE_CUDA_COMPILER:PATH=%{cuda_dir}/bin/nvcc")
-  cmake_args+=("-DCMAKE_CUDA_HOST_COMPILER=gcc-%{gcc_version}")
-else
-  cmake_args+=("-DSUNSHINE_ENABLE_CUDA=OFF")
-fi
+cmake_args+=("-DSUNSHINE_ENABLE_CUDA=OFF")
 
 # setup the version
 export BRANCH=%{branch}

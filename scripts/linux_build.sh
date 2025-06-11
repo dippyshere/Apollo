@@ -128,12 +128,6 @@ function add_arch_deps() {
       "libva"  # VA-API
     )
   fi
-
-  if [ "$skip_cuda" == 0 ]; then
-    dependencies+=(
-      "cuda"  # VA-API
-    )
-  fi
 }
 
 function add_debian_based_deps() {
@@ -342,6 +336,7 @@ function run_install() {
     "-DSUNSHINE_ENABLE_DRM=ON"
     "-DBUILD_TESTS=false"
     "-DBUILD_DOCS=false"
+    "-DSUNSHINE_ENABLE_CUDA=OFF"
     )
 
   if [ "$appimage_build" == 1 ]; then
@@ -459,13 +454,6 @@ function run_install() {
     source "$HOME/.nvm/nvm.sh"
     nvm install node
     nvm use node
-  fi
-
-  # run the cuda install
-  if [ "$skip_cuda" == 0 ]; then
-    install_cuda
-    cmake_args+=("-DSUNSHINE_ENABLE_CUDA=ON")
-    cmake_args+=("-DCMAKE_CUDA_COMPILER:PATH=$nvcc_path")
   fi
 
   # Cmake stuff here
