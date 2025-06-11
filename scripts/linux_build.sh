@@ -68,7 +68,7 @@ while getopts ":hs-:" opt; do
           publisher_issue_url="${OPTARG#*=}"
           ;;
         skip-cleanup) skip_cleanup=1 ;;
-        skip-cuda) skip_cuda=1 ;;
+        skip-cuda) skip_cuda=0 ;;
         skip-libva) skip_libva=1 ;;
         skip-package) skip_package=1 ;;
         sudo-off) sudo_cmd="" ;;
@@ -336,7 +336,6 @@ function run_install() {
     "-DSUNSHINE_ENABLE_DRM=ON"
     "-DBUILD_TESTS=false"
     "-DBUILD_DOCS=false"
-    "-DSUNSHINE_ENABLE_CUDA=OFF"
     )
 
   if [ "$appimage_build" == 1 ]; then
@@ -455,6 +454,8 @@ function run_install() {
     nvm install node
     nvm use node
   fi
+
+  cmake_args+=("-DSUNSHINE_ENABLE_CUDA=OFF")
 
   # Cmake stuff here
   mkdir -p "build"
